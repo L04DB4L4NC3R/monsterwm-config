@@ -52,6 +52,7 @@ ${WMNAME}: ${OBJ}
 clean:
 	@echo cleaning
 	@rm -fv ${WMNAME} ${OBJ} ${WMNAME}-${VERSION}.tar.gz
+	@rm config.h
 
 install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin

@@ -19,7 +19,8 @@ while read -r; do
         case $d in
             0) d="web" s=""   ;;
             1) d="dev" s="::" ;;
-            2) d="foo" s="::" ;;
+            2) d="music" s="::" ;;
+            2) d="misc" s="::" ;;
         esac
         # the current desktop color should be #d11783
         # we will also display the current desktop's tiling layout/mode
@@ -44,7 +45,6 @@ while read -r; do
 done < "$ff" | dzen2 -h 18 -w 400 -ta l -e -p -fn "-misc-terminusmod.icons-medium-r-normal--12-120-72-72-c-60-*-*" &
 
 # run startup script
-
 ~/startup.sh
 
 # pass output to fifo
