@@ -1,0 +1,22 @@
+#!/bin/bash
+
+time=$1
+warn_on=20
+debug=0
+
+discharging=`acpi | grep Discharging | wc -l` # will be 1 if discharging and 0 if chargin
+
+while true
+do
+		if [ $discharging -eq 1 ]; then # if discharging, check percentage
+				percentage_remaining=`acpi | grep -o [0-9]*% | sed s/%//g`
+				echo "Remaining ${percentage_remaining}"
+				if [ $percentage_remaining -lt $warn_on ]; then
+						DISPLAY=:0  zenity --notification --text "Warning, battery is discharging and at ${percentage_remaining}%!"
+						sleep 600
+				elif [ $debug -eq 1 ]; then
+						DISPLAY=:0  zenity --notification --text "Battery is discharging, but at ${percentage_remaining}% so it's grand!"
+				fi
+		fi
+		sleep $time
+done
