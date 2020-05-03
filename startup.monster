@@ -40,9 +40,37 @@ while read -r; do
         ((w)) && r+="$s ^fg($f)$d $w^fg() " || r+="$s ^fg($f)$d^fg() "
     done
 
+		bat=`acpi | cut -d" " -f3-6`
+		percentage_left=`acpi | cut -d" " -f4| sed s/%,//g`
+
+		if [ $percentage_left -gt 75 ]
+	 	then
+				sign="\uF240"
+		# TODO: how to render unicode in dzen2??
+				sign="[##########]"
+		fi
+		if [ $percentage_left -lt 75 ]
+		then
+				sign="\uF241"
+		# TODO: how to render unicode in dzen2??
+				sign="[#######___]"
+		fi
+		if [ $percentage_left -lt 50 ]
+		then
+				sign="\uF242"
+		# TODO: how to render unicode in dzen2??
+				sign="[#####_____]"
+		fi
+		if [ $percentage_left -lt 25 ]
+		then
+				sign="\uF243"
+		# TODO: how to render unicode in dzen2??
+				sign="[###_______]"
+		fi
     # read from fifo and output to dzen2
-    printf "%s%s\n" "$r" "$i" && unset r
-done < "$ff" | dzen2 -h 18 -w 400 -ta l -e -p -fn "-misc-terminusmod.icons-medium-r-normal--12-120-72-72-c-60-*-*" &
+		datetime=`date +"%H:%M:%S || %d / %m / %y"`
+    printf "%s%s %s %s  %s\n" "$r" "$i" "$sign" "$bat" "$datetime" && unset r
+done < "$ff" | dzen2 -h 18 -w 1600 -ta l -e -p -fn "-misc-terminusmod.icons-medium-r-normal--12-120-72-72-c-60-*-*" &
 
 # run startup script
 ~/startup.sh

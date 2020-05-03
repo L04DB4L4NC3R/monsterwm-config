@@ -15,7 +15,7 @@
 #define TOP_PANEL       True      /* False means panel is on bottom */
 #define PANEL_HEIGHT    18        /* 0 for no space for panel, thus no panel */
 #define DEFAULT_MODE    TILE      /* initial layout/mode: TILE MONOCLE BSTACK GRID FLOAT */
-#define ATTACH_ASIDE    True      /* False means new window is master */
+#define ATTACH_ASIDE    False      /* False means new window is master */
 #define FOLLOW_WINDOW   True     /* follow the window when moved to a different desktop */
 #define FOLLOW_MOUSE    True     /* focus the window the mouse just entered */
 #define CLICK_TO_FOCUS  True      /* focus an unfocused window when clicked  */
@@ -47,6 +47,9 @@ static const AppRule rules[] = { \
  */
 static const char *termcmd[] = { "terminator",     NULL };
 static const char *menucmd[] = { "dmenu_run", NULL };
+static const char *spotifycmd[] = {"spotify", NULL};
+static const char *brightup[] = {"sudo bright", NULL};
+static const char *brightdown[] = {"sudo bright -d", NULL};
 
 #define DESKTOPCHANGE(K,N) \
     {  MOD1,             K,              change_desktop, {.i = N}}, \
@@ -83,7 +86,10 @@ static Key keys[] = {
     {  MOD1|SHIFT,       XK_i,          switch_mode,       {.i = FIBONACCI}},
     {  MOD1|SHIFT,       XK_q,          quit,              {.i = 0}}, /* quit with exit value 0 */
     {  MOD1|CONTROL,     XK_q,          quit,              {.i = 1}}, /* quit with exit value 1 */
-    {  MOD1,       XK_Return,     spawn,             {.com = termcmd}},
+		{  MOD1,             XK_Return,     spawn,             {.com = termcmd}},
+    {  MOD1,             XK_s,          spawn,             {.com = spotifycmd}},
+    {  MOD4,             XK_F12,          spawn,             {.com = brightup}},
+    {  MOD4,             XK_F11,          spawn,             {.com = brightdown}},
     {  MOD1,             XK_p,          spawn,             {.com = menucmd}},
     {  MOD4,             XK_j,          moveresize,        {.v = (int []){   0,  25,   0,   0 }}}, /* move down  */
     {  MOD4,             XK_k,          moveresize,        {.v = (int []){   0, -25,   0,   0 }}}, /* move up    */
